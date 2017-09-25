@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class PageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
    
@@ -17,6 +19,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
     var NextButton: UIButton?
     let deepPink = UIColor.init(red: 255, green: 20/255, blue: 147/255, alpha: 1)
     var onLastPage = false
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +75,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
             button.setTitle("NEXT", for: .normal)
             button.setTitleColor(deepPink, for: .normal)
             
+            
+            
 //            button.backgroundColor = .blue
             
             //deactivate frame layout
@@ -90,48 +96,32 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
             unwrappedNextButton.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -50 ).isActive = true
             unwrappedNextButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
         }
-        
-        
-        
-        
-        
-        
     }
-    
     
     //ASK: HOW DO I RUN ON OF THESE METHODS ON A BUTTON CLICK??
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        //print("going to next")
+        
         
         if let viewControllerIndex = self.pages.index(of: viewController) {
             if viewControllerIndex < self.pages.count - 1 {
                 //go to next page in array
-                
-                
-                
-                
-                if let unwrappedNextButton = NextButton {
-                    unwrappedNextButton.setTitleColor(UIColor.init(red: 255, green: 20/255, blue: 147/255, alpha: 1), for: .normal)
-                }
+                onLastPage = false
+                print("going to next; onLastPage is: \(onLastPage)")
+                NextButton?.setTitleColor(deepPink, for: .normal)
                 return self.pages[viewControllerIndex + 1]
+                
                 
             }
             
-            //if on last page change next button color to gray
+            
             if viewControllerIndex == self.pages.count - 1 {
-                
                 onLastPage = true
-                
-                if onLastPage {
-                    if let unwrappedNextButton = NextButton {
-                        unwrappedNextButton.setTitleColor(.lightGray, for: .normal)
-                    }
-                }
-                
-                
+                print(onLastPage)
+                NextButton?.setTitleColor(UIColor.gray, for: .normal)
                 return nil
             }
+            
         }
         
         return nil
@@ -142,12 +132,8 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
         //print("going back")
         
         onLastPage = false
-        
-        if onLastPage == false {
-            if let unwrappedNextButton = NextButton {
-                unwrappedNextButton.setTitleColor(deepPink, for: .normal)
-            }
-        }
+        print("Going back ; onLastPage = \(onLastPage)")
+        NextButton?.setTitleColor(deepPink, for: .normal)
         
         if let viewControllerIndex = self.pages.index(of: viewController) {
             if viewControllerIndex == 0 {
@@ -179,3 +165,6 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
     }
     
 }
+
+
+
