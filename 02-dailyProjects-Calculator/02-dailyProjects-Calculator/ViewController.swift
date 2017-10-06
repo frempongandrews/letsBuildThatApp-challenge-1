@@ -165,10 +165,10 @@ class ViewController: UIViewController {
         //<!-- Creating 4 buttons with for loop-->
         
         var buttonsArr: [UIButton] = []
-        var buttonTitles = ["None", "Add", "Subtract", "Multiply", "Divide"]
+        var buttonTitles = ["None", "Add", "Subtract", "Multiply", "Divide", "Compute"]
         var leftAnchor:NSLayoutXAxisAnchor?
         //print(type(of: leftAnchor))
-        for i in 0...3 {
+        for i in 0...5 {
             let button = UIButton()
             button.setTitle(buttonTitles[i], for: .normal)
             button.backgroundColor = .red
@@ -176,31 +176,60 @@ class ViewController: UIViewController {
             button.layer.borderWidth = 1
             button.translatesAutoresizingMaskIntoConstraints = false
             
-            if buttonsArr.count == 0 {
-                leftAnchor = operatorsContainerView.leftAnchor
-            } else if buttonsArr.count == 1{
-                leftAnchor = buttonsArr[0].rightAnchor
-            } else {
-                leftAnchor = buttonsArr[i - 1].rightAnchor
+            
+            //creating 4 operation buttons
+            
+            if i >= 0 && i <= 4 {
+                
+                if buttonsArr.count == 0 {
+                    leftAnchor = operatorsContainerView.leftAnchor
+                } else if buttonsArr.count == 1{
+                    leftAnchor = buttonsArr[0].rightAnchor
+                } else {
+                    leftAnchor = buttonsArr[i - 1].rightAnchor
+                }
+                
+                buttonsArr.append(button)
+                
+                //show button
+                operatorsContainerView.addSubview(button)
+                
+                //the only variable that changes is the left anchor
+                
+                button.leftAnchor.constraint(equalTo: leftAnchor!, constant: 0).isActive = true
+                button.widthAnchor.constraint(equalTo: operatorsContainerView.widthAnchor, multiplier: 0.20).isActive = true
+                button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                
+                
+                //set Y anchor
+                
+                button.centerYAnchor.constraint(equalTo: operatorsContainerView.centerYAnchor, constant: 0).isActive = true
+                
+            } else {//compute button
+                
+                button.setTitle("Compute", for: .normal)
+                button.backgroundColor = .white
+                button.setTitleColor(.red, for: .normal)
+                //add to view
+                
+                containerView.addSubview(button)
+                
+                //constraints
+                
+                button.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
+                button.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8).isActive = true
+                button.topAnchor.constraint(equalTo: operatorsContainerView.bottomAnchor, constant: 10).isActive = true
+                
+                print(buttonTitles[i])
             }
             
-            buttonsArr.append(button)
-            
-           
-            
-            //show button
-            operatorsContainerView.addSubview(button)
-            
-            //the only variable that changes is the left anchor
-            
-                button.leftAnchor.constraint(equalTo: leftAnchor!, constant: 0).isActive = true
-                button.widthAnchor.constraint(equalTo: operatorsContainerView.widthAnchor, multiplier: 0.25).isActive = true
-                button.heightAnchor.constraint(equalToConstant: 50).isActive = true
             
             
-            //set Y anchor
             
-            button.centerYAnchor.constraint(equalTo: operatorsContainerView.centerYAnchor, constant: 0).isActive = true
+            
+            
+            
+            
             
         } //<!-- End Creating 4 buttons with for loop-->
 
