@@ -1,1 +1,1 @@
-iOS Challenges From Lets Build That App
+iOS Challenges Directly From 'Lets Build That App' Creator, Brian Voong
