@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     
-    
+    var buttonSelected = false
     var buttonsArr: [UIButton] = []
     var buttonTitles = ["None", "Add", "Subtract", "Multiply", "Divide", "Compute"]
     var leftAnchor:NSLayoutXAxisAnchor?
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     let operatorLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .red
+        label.backgroundColor = .white
         label.text = "+"
         label.textAlignment = .center
         
@@ -39,9 +39,9 @@ class ViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "X"
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .white
         textField.textAlignment = .center
-        textField.keyboardType = .numberPad
+        textField.keyboardType = .decimalPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -52,8 +52,8 @@ class ViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Y"
         textField.borderStyle = .roundedRect
-        textField.backgroundColor = .lightGray
-        textField.keyboardType = .numberPad
+        textField.backgroundColor = .white
+        textField.keyboardType = .decimalPad
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -64,6 +64,7 @@ class ViewController: UIViewController {
     let resultLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .lightGray
+        label.layer.borderWidth = 0
         label.text = "Result"
         label.textAlignment = .right
         label.isUserInteractionEnabled = false
@@ -77,9 +78,12 @@ class ViewController: UIViewController {
     
     let operatorsContainerView: UIView = {
         let v = UIView()
-        v.backgroundColor = .green
-        v.layer.borderColor = UIColor.red.cgColor
+        //v.backgroundColor = .green
+        v.layer.borderColor = UIColor.blue.cgColor
         v.layer.borderWidth = 1
+        
+        v.layer.masksToBounds = true //for cornerRadius
+        v.layer.cornerRadius = 5
         
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
@@ -100,23 +104,78 @@ class ViewController: UIViewController {
     
     func handleNone () {
         operatorLabel.text = ""
+        for button in buttonsArr {
+            if button.currentTitle == "None" {
+                button.setBackgroundImage(#imageLiteral(resourceName: "bg-image"), for: .normal)
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.setBackgroundImage(#imageLiteral(resourceName: "white-bg-image"), for: .normal)
+                button.setTitleColor(.blue, for: .normal)
+            }
+        }
         print("handling none")
     }
     
     func handleAdd () {
         operatorLabel.text = "+"
+        for button in buttonsArr {
+            if button.currentTitle == "Add" {
+                button.setBackgroundImage(#imageLiteral(resourceName: "bg-image"), for: .normal)
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.setBackgroundImage(#imageLiteral(resourceName: "white-bg-image"), for: .normal)
+                button.setTitleColor(.blue, for: .normal)
+            }
+        }
+        
+        print("Handling Add")
     }
     
     func handleSubtract () {
         operatorLabel.text = "-"
+        
+        for button in buttonsArr {
+            if button.currentTitle == "Subtract" {
+                button.setBackgroundImage(#imageLiteral(resourceName: "bg-image"), for: .normal)
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.setBackgroundImage(#imageLiteral(resourceName: "white-bg-image"), for: .normal)
+                button.setTitleColor(.blue, for: .normal)
+            }
+        }
+        
+        print("Handling Subtract")
     }
     
     func handleMultiply () {
         operatorLabel.text = "*"
+        
+        for button in buttonsArr {
+            if button.currentTitle == "Multiply" {
+                button.setBackgroundImage(#imageLiteral(resourceName: "bg-image"), for: .normal)
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.setBackgroundImage(#imageLiteral(resourceName: "white-bg-image"), for: .normal)
+                button.setTitleColor(.blue, for: .normal)
+            }
+        }
+        print("Handling Multiply")
     }
     
     func handleDivide() {
         operatorLabel.text = "/"
+        
+        for button in buttonsArr {
+            if button.currentTitle == "Divide" {
+                button.setBackgroundImage(#imageLiteral(resourceName: "bg-image"), for: .normal)
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.setBackgroundImage(#imageLiteral(resourceName: "white-bg-image"), for: .normal)
+                button.setTitleColor(.blue, for: .normal)
+            }
+        }
+        
+        print("Handling Divide")
     }
     
     
@@ -124,7 +183,7 @@ class ViewController: UIViewController {
     
     func handleCompute () {
         
-        var calculationIsReady = false
+        
         var firstNumberIsReady = false
         var secondNumberIsReady = false
         var operatorIsReady = false
@@ -146,35 +205,71 @@ class ViewController: UIViewController {
         
         if let op = operatorLabel.text {
             if op == "" {
-                print("Please operator")
+                print("Please insert operator")
             } else {
                 operatorIsReady = true
             }
         }
         
-        
         //ready for calculation
         if firstNumberIsReady && secondNumberIsReady && operatorIsReady {
             //print("yay!!")
+            
+            ///////////////////////<!-- TODO: The (repetitive)operations part below can perhaps be done with a for loop. -->
+            ///////////////////////<!-- TODO: with operators strings in an array or with a function that takes in  -->
+            ///////////////////////<!-- TODO: 3 strings as parameters(firstNum and secondNum and operator, and returns result based  -->
+            ///////////////////////<!-- TODO: on operator (maybe with switch statement)  -->
             
             //adding
             if operatorLabel.text == "+" {
                 
                 if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
-                    let result = Int(firstNum)! + Int(secondNum)!
+                    let result = Float(firstNum)! + Float(secondNum)!
+                    resultLabel.text = String(describing: result)
+                    
+                }
+                
+            }//<!-- end of adding -->
+            
+            //subtracting
+            
+            if operatorLabel.text == "-" {
+                
+                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
+                    let result = Float(firstNum)! - Float(secondNum)!
                     resultLabel.text = String(describing: result)
                 }
                 
+            }//<!-- end of subtracting -->
+            
+            
+            //multiply
+            if operatorLabel.text == "*" {
                 
-            }//<!-- end of nigeria
-        }
+                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
+                    let result = Float(firstNum)! * Float(secondNum)!
+                    resultLabel.text = String(describing: result)
+                }
+                
+            }//<!-- end of multiply -->
+            
+            
+            //divide
+            if operatorLabel.text == "/" {
+                
+                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
+                    let result = Float(firstNum)! / Float(secondNum)!
+                    resultLabel.text = String(describing: result)
+                }
+                
+            }//<!-- end of divide -->
+            
+        }//<!-- end of if ready for calculation-->
         
-        
-        
-    }
+    }//<!-- end of handle compute-->
     
     
-    var functionsArr = [handleNone, handleAdd, handleSubtract, handleMultiply, handleDivide, handleCompute]
+    
 
     
     func setupLayout () {
@@ -283,8 +378,9 @@ class ViewController: UIViewController {
         for i in 0...5 {
             let button = UIButton()
             button.setTitle(buttonTitles[i], for: .normal)
-            button.backgroundColor = .red
-            button.layer.borderColor = UIColor.black.cgColor
+            button.setTitleColor(.blue, for: .normal)
+            button.backgroundColor = .white
+            button.layer.borderColor = UIColor.blue.cgColor
             button.layer.borderWidth = 1
             button.translatesAutoresizingMaskIntoConstraints = false
             
@@ -317,11 +413,14 @@ class ViewController: UIViewController {
                 
                 button.centerYAnchor.constraint(equalTo: operatorsContainerView.centerYAnchor, constant: 0).isActive = true
                 
-            } else {//compute button
+            } else {
+                //compute button
                 
                 button.setTitle("Compute", for: .normal)
                 button.backgroundColor = .white
                 button.setTitleColor(.red, for: .normal)
+                button.layer.borderColor = UIColor.red.cgColor
+                button.layer.borderWidth = 1
                 buttonsArr.append(button)
             
                 
