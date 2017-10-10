@@ -91,7 +91,7 @@ class ViewController: UIViewController {
     }//<!-- end viewDidLoad -->
     
     @objc func handleCompute () {
-        print("Compute pressed")
+        //print("Compute pressed")
         
         var firstNumberIsReady = false
         var secondNumberIsReady = false
@@ -124,60 +124,36 @@ class ViewController: UIViewController {
         if firstNumberIsReady && secondNumberIsReady && operatorIsReady {
             //print("yay!!")
             
-         
+            //optional unwrapping done in if statement above
+            let firstNumber = Float(firstNumberTextField.text!)!
+            let secondNumber = Float(secondNumberTextField.text!)!
             
-            //adding
-            
-            //////<!!-- UNCOMMENT THIS AREA FOR PREVIOUS RESULT --> ////////////////////////
-            
-            if operatorLabel.text == "+" {
+            // result based on what operator has been selected
+            switch operatorLabel.text! {
+            case "+":
+                let result = firstNumber + secondNumber
+                resultLabel.text = String(result)
                 
-                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
-                    let result = Float(firstNum)! + Float(secondNum)!
-                    resultLabel.text = String(describing: result)
-                    
-                }
+            case "-":
+                let result = firstNumber - secondNumber
+                resultLabel.text = String(result)
                 
-            }//<!-- end of adding -->
-            
-            //subtracting
-            
-            if operatorLabel.text == "-" {
+            case "*":
+                let result = firstNumber * secondNumber
+                resultLabel.text = String(result)
                 
-                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
-                    let result = Float(firstNum)! - Float(secondNum)!
-                    resultLabel.text = String(describing: result)
-                }
+            case "/":
+                let result = firstNumber / secondNumber
+                resultLabel.text = String(result)
                 
-            }//<!-- end of subtracting -->
-            
-            
-            //multiply
-            if operatorLabel.text == "*" {
-                
-                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
-                    let result = Float(firstNum)! * Float(secondNum)!
-                    resultLabel.text = String(describing: result)
-                }
-                
-            }//<!-- end of multiply -->
-            
-            
-            //divide
-            if operatorLabel.text == "/" {
-                
-                if let firstNum = firstNumberTextField.text, let secondNum = secondNumberTextField.text {
-                    let result = Float(firstNum)! / Float(secondNum)!
-                    resultLabel.text = String(describing: result)
-                }
-                
-            }//<!-- end of divide -->
-            
-//////<!!-- END OF UNCOMMENT THIS AREA FOR PREVIOUS RESULT --> ////////////////////////
-            
+            default:
+                break
+            }
             
         }//<!-- end of if ready for calculation-->
     }//<!-- end handle compute-->
+    
+
     
     @objc func handleOperatorLabel (sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
